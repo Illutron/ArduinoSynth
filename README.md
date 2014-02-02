@@ -3,8 +3,13 @@ ArduinoSynth
 
 This is a fork of Illutron's ArduinoSynth repo.
 
-What's to be added is:
+__Arduino MEGA__ boards: Pin __10__  
+__Arduino ATmega328/168 based__ boards (Duemilanove, Uno, etc.): Pin __6__
 
+__Implemented features:__  
+-Compatibility with Arduino MEGA(2560) boards
+
+
+__What's to be added is:__  
 -Basic documentation  
--Compatibility with other boards (originally only compatible with ATmega328/128 based Arduino boards)  
--Choosing output pin manually, although only PWM (originally fixed to pin 6)
+-Choosing output pin manually, although only PWM (originally fixed to pin 6)  
