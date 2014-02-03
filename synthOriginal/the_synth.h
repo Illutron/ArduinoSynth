@@ -116,8 +116,12 @@ SIGNAL(TIMER1_COMPA_vect)
   //-------------------------------
   //  Synthesizer/audio mixer
   //-------------------------------
-
+    
+    #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) //Arduino MEGA(2560) boards
+    OCR2A=127+
+    #else //Arduino ATmega168/328 based boards
     OCR0A=127+
+    #endif
   	((
   	(((signed char)pgm_read_byte(wavs[0]+((PCW[0]+=FTW[0])>>8))*AMP[0])>>8)+
   	(((signed char)pgm_read_byte(wavs[1]+((PCW[1]+=FTW[1])>>8))*AMP[1])>>8)+
@@ -282,10 +286,17 @@ void initSynth()
   SET(TIMSK1,OCIE1A);                             // |
   sei();                                          //-+
 
+  #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) //Arduino MEGA(2560) boards
+  TCCR2A=0x83;                                    //-8 bit audio PWM
+  TCCR2B=0x01;                                    // |
+  OCR2A=127;                                      //-+
+  SET(DDRB,4);							        //-PWM pin
+  #else //Arduino ATmega328/168 based boards
   TCCR0A=0x83;                                    //-8 bit audio PWM
   TCCR0B=0x01;                                    // |
   OCR0A=127;                                      //-+
   SET(DDRD,6);							        //-PWM pin
+  #endif
 /*
   UCSR0A=0x02;                        //-Set up serial port 31250
   UCSR0B=0x18;						// |
